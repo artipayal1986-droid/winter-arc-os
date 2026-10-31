@@ -30,6 +30,42 @@ from datetime import datetime
 
 today = datetime.now().strftime("%Y-%m-%d")
 
+# First launch
+if "last_date" not in data:
+    data["last_date"] = today
+
+# Daily Reset System
+if data["last_date"] != today:
+
+    # Save previous day summary
+    if "daily_history" not in data:
+        data["daily_history"] = []
+
+    data["daily_history"].append({
+        "date": data["last_date"],
+        "productive_minutes": data["productive_minutes"],
+        "waste_minutes": data["waste_minutes"]
+    })
+
+    # Reset daily data
+    data["tasks"] = []
+    data["productive_minutes"] = 0
+    data["waste_minutes"] = 0
+    data["journal"] = ""
+
+    # Reset habits
+    if "habits" in data:
+        for habit in data["habits"]:
+            data["habits"][habit] = False
+
+    # Update date
+    data["last_date"] = today
+
+    save_data(data)
+from datetime import datetime
+
+today = datetime.now().strftime("%Y-%m-%d")
+
 if "last_date" not in data:
     data["last_date"] = today
 
