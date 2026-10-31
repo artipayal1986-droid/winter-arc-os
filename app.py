@@ -72,7 +72,7 @@ if "last_date" not in data:
 # New Day Detection
 if data["last_date"] != today:
 
-    # Reset Daily Data
+# Reset Daily Data
 if "daily_history" not in data:
     data["daily_history"] = []
 
