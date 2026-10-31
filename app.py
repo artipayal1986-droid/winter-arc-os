@@ -91,14 +91,14 @@ if data["last_date"] != today:
     data["journal"] = ""
 
         # Reset Habits
-        if "habits" in data:
-            for habit in data["habits"]:
-                data["habits"][habit] = False
+    if "habits" in data:
+        for habit in data["habits"]:
+            data["habits"][habit] = False
 
         # Save Today
-        data["last_date"] = today
+    data["last_date"] = today
 
-        save_data(data)
+    save_data(data)
 if "subjects" not in data:
 
     data["subjects"] = {
