@@ -37,7 +37,16 @@ if "last_date" not in data:
 if data["last_date"] != today:
 
     # Reset Daily Data
-    data["tasks"] = []
+if "daily_history" not in data:
+    data["daily_history"] = []
+
+data["daily_history"].append({
+    "date": data["last_date"],
+    "productive_minutes": data["productive_minutes"],
+    "waste_minutes": data["waste_minutes"]
+})
+
+data["tasks"] = []
 
     data["productive_minutes"] = 0
 
