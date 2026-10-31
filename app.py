@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import time
 import json
 import os
 from io import BytesIO
@@ -25,7 +26,11 @@ def save_data(data):
         json.dump(data, f, indent=2)
 
 data = load_data()
+if "timer_running" not in st.session_state:
+    st.session_state.timer_running = False
 
+if "time_left" not in st.session_state:
+    st.session_state.time_left = 25 * 60
 st.set_page_config(
     page_title="Winter Arc OS",
     layout="wide"
@@ -104,6 +109,49 @@ for i, t in enumerate(data["tasks"]):
 
 st.divider()
 
+st.header("🍅 Pomodoro Timer")
+
+minutes = st.session_state.time_left // 60
+seconds = st.session_state.time_left % 60
+
+st.markdown(
+    f"## ⏳ {minutes:02}:{seconds:02}"
+)
+
+c1, c2, c3 = st.columns(3)
+
+with c1:
+    if st.button("▶ Start"):
+        st.session_state.timer_running = True
+
+with c2:
+    if st.button("⏸ Pause"):
+        st.session_state.timer_running = False
+
+with c3:
+    if st.button("🔄 Reset"):
+        st.session_state.timer_running = False
+        st.session_state.time_left = 25 * 60
+
+if st.session_state.timer_running:
+
+    time.sleep(1)
+
+    st.session_state.time_left -= 1
+
+    if st.session_state.time_left <= 0:
+
+        st.session_state.time_left = 25 * 60
+
+        data["productive_minutes"] += 25
+
+        save_data(data)
+
+        st.success(
+            "🎉 Focus Session Completed!"
+        )
+
+    st.rerun()
 # Productivity
 st.header("⏱ Productivity Tracker")
 
