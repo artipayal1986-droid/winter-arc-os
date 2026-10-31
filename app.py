@@ -34,6 +34,8 @@ if "subjects" not in data:
         "Maths": 0,
         "Coding": 0
     }
+    if "study_history" not in data:
+    data["study_history"] = []
 
     save_data(data)
 if "timer_running" not in st.session_state:
@@ -218,7 +220,18 @@ if st.button("Add Study Session"):
 
     data["subjects"][subject] += minutes
 
+    data["study_history"].append(
+        {
+            "subject": subject,
+            "minutes": minutes
+        }
+    )
+
     save_data(data)
+
+    st.success(
+        f"{minutes} min added to {subject}"
+    )
 
     st.success(
         f"{minutes} min added to {subject}"
@@ -281,6 +294,58 @@ best_subject = max(
 
 st.success(
     f"🏆 Best Subject: {best_subject}"
+)
+st.divider()
+
+st.header("📅 Weekly Study Report")
+
+weekly_total = 0
+
+for session in data["study_history"]:
+    weekly_total += session["minutes"]
+
+st.metric(
+    "Weekly Minutes",
+    weekly_total
+)
+
+st.subheader("🏆 Subject Rankings")
+
+ranked = sorted(
+    data["subjects"].items(),
+    key=lambda x: x[1],
+    reverse=True
+)
+
+for i, item in enumerate(ranked):
+
+    subject = item[0]
+    mins = item[1]
+
+    st.write(
+        f"{i+1}. {subject} — {mins} min"
+    )
+    st.subheader("🤖 Productivity Insights")
+
+if weekly_total >= 1000:
+    st.success(
+        "🔥 Excellent consistency this week!"
+    )
+
+elif weekly_total >= 500:
+    st.info(
+        "✅ Good progress. Keep pushing."
+    )
+
+else:
+    st.warning(
+        "⚠️ Try increasing study hours next week."
+    )
+
+strongest = ranked[0][0]
+
+st.write(
+    f"Strongest Subject: {strongest}"
 )
 # Journal
 st.header("📔 Daily Journal")
