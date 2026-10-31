@@ -123,6 +123,19 @@ with col2:
 
 st.divider()
 
+st.header("🏆 Habit Tracker")
+
+habits = [
+    "Workout",
+    "Reading",
+    "Water Goal",
+    "Sleep Goal",
+    "No Social Media"
+]
+
+for habit in habits:
+    st.checkbox(habit)
+
 # Journal
 st.header("📔 Daily Journal")
 
