@@ -26,6 +26,34 @@ def save_data(data):
         json.dump(data, f, indent=2)
 
 data = load_data()
+from datetime import datetime
+
+today = datetime.now().strftime("%Y-%m-%d")
+
+if "last_date" not in data:
+    data["last_date"] = today
+
+# New Day Detection
+if data["last_date"] != today:
+
+    # Reset Daily Data
+    data["tasks"] = []
+
+    data["productive_minutes"] = 0
+
+    data["waste_minutes"] = 0
+
+    data["journal"] = ""
+
+    # Reset Habits
+    if "habits" in data:
+        for habit in data["habits"]:
+            data["habits"][habit] = False
+
+    # Save Today
+    data["last_date"] = today
+
+    save_data(data)
 if "subjects" not in data:
 
     data["subjects"] = {
