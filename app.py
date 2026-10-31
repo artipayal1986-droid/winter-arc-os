@@ -72,33 +72,33 @@ if "last_date" not in data:
 # New Day Detection
 if data["last_date"] != today:
 
-# Reset Daily Data
-if "daily_history" not in data:
-    data["daily_history"] = []
+    # Reset Daily Data
+    if "daily_history" not in data:
+        data["daily_history"] = []
 
-data["daily_history"].append({
-    "date": data["last_date"],
-    "productive_minutes": data["productive_minutes"],
-    "waste_minutes": data["waste_minutes"]
-})
+    data["daily_history"].append({
+        "date": data["last_date"],
+        "productive_minutes": data["productive_minutes"],
+        "waste_minutes": data["waste_minutes"]
+    })
 
-data["tasks"] = []
+    data["tasks"] = []
 
-    data["productive_minutes"] = 0
+        data["productive_minutes"] = 0
 
-    data["waste_minutes"] = 0
+        data["waste_minutes"] = 0
 
-    data["journal"] = ""
+        data["journal"] = ""
 
-    # Reset Habits
-    if "habits" in data:
-        for habit in data["habits"]:
-            data["habits"][habit] = False
+        # Reset Habits
+        if "habits" in data:
+            for habit in data["habits"]:
+                data["habits"][habit] = False
 
-    # Save Today
-    data["last_date"] = today
+        # Save Today
+        data["last_date"] = today
 
-    save_data(data)
+        save_data(data)
 if "subjects" not in data:
 
     data["subjects"] = {
