@@ -231,6 +231,57 @@ for name, mins in data["subjects"].items():
     st.write(
         f"{name}: {mins} min"
     )
+    st.divider()
+
+st.header("📊 Study Analytics")
+
+total_minutes = sum(
+    data["subjects"].values()
+)
+
+st.metric(
+    "Total Study Time",
+    f"{total_minutes} min"
+)
+
+for subject, mins in data["subjects"].items():
+
+    st.write(
+        f"### {subject}"
+    )
+
+    progress = min(
+        mins / 600,
+        1.0
+    )
+
+    st.progress(progress)
+
+    st.write(
+        f"{mins} minutes"
+    )
+    import pandas as pd
+
+st.subheader(
+    "📈 Study Chart"
+)
+
+chart_data = pd.DataFrame(
+    {
+        "Minutes":
+        data["subjects"]
+    }
+)
+
+st.bar_chart(chart_data)
+best_subject = max(
+    data["subjects"],
+    key=data["subjects"].get
+)
+
+st.success(
+    f"🏆 Best Subject: {best_subject}"
+)
 # Journal
 st.header("📔 Daily Journal")
 
