@@ -84,11 +84,11 @@ if data["last_date"] != today:
 
     data["tasks"] = []
 
-        data["productive_minutes"] = 0
+    data["productive_minutes"] = 0
 
-        data["waste_minutes"] = 0
+    data["waste_minutes"] = 0
 
-        data["journal"] = ""
+    data["journal"] = ""
 
         # Reset Habits
         if "habits" in data:
