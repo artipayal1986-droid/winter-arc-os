@@ -26,6 +26,16 @@ def save_data(data):
         json.dump(data, f, indent=2)
 
 data = load_data()
+if "subjects" not in data:
+
+    data["subjects"] = {
+        "Physics": 0,
+        "Chemistry": 0,
+        "Maths": 0,
+        "Coding": 0
+    }
+
+    save_data(data)
 if "timer_running" not in st.session_state:
     st.session_state.timer_running = False
 
@@ -183,7 +193,44 @@ habits = [
 
 for habit in habits:
     st.checkbox(habit)
+st.divider()
 
+st.header("📚 Study Tracker")
+
+subject = st.selectbox(
+    "Subject",
+    [
+        "Physics",
+        "Chemistry",
+        "Maths",
+        "Coding"
+    ]
+)
+
+minutes = st.number_input(
+    "Minutes Studied",
+    min_value=0,
+    max_value=600,
+    step=5
+)
+
+if st.button("Add Study Session"):
+
+    data["subjects"][subject] += minutes
+
+    save_data(data)
+
+    st.success(
+        f"{minutes} min added to {subject}"
+    )
+
+st.subheader("Today's Subjects")
+
+for name, mins in data["subjects"].items():
+
+    st.write(
+        f"{name}: {mins} min"
+    )
 # Journal
 st.header("📔 Daily Journal")
 
