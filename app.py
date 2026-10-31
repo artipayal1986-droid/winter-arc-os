@@ -34,7 +34,7 @@ if "subjects" not in data:
         "Maths": 0,
         "Coding": 0
     }
-    if "study_history" not in data:
+if "study_history" not in data:
     data["study_history"] = []
 
     save_data(data)
