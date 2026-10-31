@@ -180,6 +180,32 @@ if st.button("Generate Report"):
 
 st.divider()
 
+st.header("🎯 Daily Score")
+
+task_score = 0
+
+for task in data["tasks"]:
+    if task["completed"]:
+        task_score += 10
+
+habit_score = 0
+
+for habit in habits:
+    habit_score += 10
+
+focus_score = data["productive_minutes"] // 25 * 5
+
+daily_score = min(
+    task_score +
+    habit_score +
+    focus_score,
+    100
+)
+
+st.metric(
+    "Today's Score",
+    f"{daily_score}/100"
+)
 # AI Coach
 st.header("🤖 AI Coach")
 
